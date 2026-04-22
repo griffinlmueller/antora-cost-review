@@ -1,0 +1,19 @@
+id,part_name,category,description,material_assumption,current_cost_usd,savings_estimate_usd,status,owner,last_updated,supplier,lead_time_weeks,notes,next_action
+OPP-001,Carbon block housing,Thermal,Machined carbon block for heat storage core,Carbon graphite @ $18/kg,84000,42000,Identified,,2026-01-10,Thermcraft,14,High savings but no owner assigned,
+OPP-002,TPV mount bracket,Mechanical,Bracket for thermophotovoltaic panel mounting,Steel @ $3.20/kg,12000,4800,In Progress,Jamie Solis,2026-03-15,Acme Fabrication,6,,Get revised quote by EOQ
+OPP-003,TPV mounting assembly,Mechanical,Assembly bracket for TPV panel installation,Steel @ $3.20/kg,11500,4600,Identified,Jamie Solis,2026-03-20,Acme Fabrication,6,Possible duplicate of OPP-002,
+OPP-004,Thermal insulation panel,Thermal,Microporous insulation board for cavity walls,Microporous silica @ $22/kg,31000,9300,Stale,,2025-08-01,Insultech,10,,
+OPP-005,Electrical feedthrough,Electrical,High-temp ceramic feedthrough for internal wiring,Alumina ceramic @ $45/kg,8500,2550,In Progress,Taylor Brooks,2026-04-01,CeramTech,8,,Awaiting supplier sample
+OPP-006,Carbon block housing v2,Thermal,Revised carbon block housing with thinner walls,Carbon graphite @ $21/kg,81000,40500,Identified,,2026-01-12,Thermcraft,14,Possible duplicate of OPP-001 at different material price,
+OPP-007,Steel support frame,Mechanical,Structural frame for battery module stack,Steel @ $2.90/kg,18000,5400,Stale,,2025-07-15,MetalWorks Co,8,,
+OPP-008,Emitter surface coating,Thermal,Selective emitter coating for TPV efficiency,Tungsten @ $380/kg,22000,11000,Identified,,2026-02-20,SurfaceTech,12,High savings no owner,
+OPP-009,Ceramic fiber blanket,Thermal,Wrap insulation for outer shell,Ceramic fiber @ $12/kg,9000,2700,Completed,Morgan Lee,2026-04-10,IsoWool,4,,Closed - savings realized
+OPP-010,Bus bar assembly,Electrical,Copper bus bars for internal power distribution,Copper @ $9.50/kg,14000,4200,In Progress,Taylor Brooks,2026-03-28,CopperFab,6,,Design review scheduled
+OPP-011,Graphite felt liner,Thermal,Felt liner for thermal cavity interior,Carbon graphite @ $18/kg,7500,2250,Stale,,2025-09-10,Thermcraft,10,,
+OPP-012,Vacuum enclosure shell,Mechanical,Outer vacuum shell for thermal isolation,Steel @ $2.90/kg,45000,13500,Identified,,2025-08-20,PrecisionFab,16,High savings no owner,
+OPP-013,TPV receiver module,Electrical,Full TPV receiver including frame and wiring,Steel @ $3.80/kg,38000,19000,Identified,,2026-02-05,PowerCell Inc,12,High savings no owner,
+OPP-014,Charge controller board,Electrical,PCB for charge management and monitoring,,6000,1800,Identified,Alex Kim,2026-04-05,CircuitPro,5,Missing material assumption,Review BOM
+OPP-015,Insulation end cap,Thermal,End cap insulation for top and bottom faces,Microporous silica @ $19/kg,5500,1650,Stale,,2025-10-01,Insultech,8,,
+OPP-016,Module lift fixture,Mechanical,Handling fixture for battery module assembly,,3200,960,Identified,Jordan Wu,2026-03-30,LocalMach,3,Missing material assumption,Confirm with mfg
+OPP-017,Graphite felt liner bulk,Thermal,Bulk purchase option for graphite felt,Carbon graphite @ $15/kg,7500,3000,Identified,,2025-08-05,Thermcraft,10,Possible duplicate of OPP-011 at different bulk price,
+OPP-018,Power conversion unit,Electrical,DC-DC converter for output power conditioning,,95000,28500,Identified,,2025-06-30,PowerTech,20,High savings no owner - very stale,

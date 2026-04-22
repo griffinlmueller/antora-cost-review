@@ -4,10 +4,11 @@ import json
 import os
 from pathlib import Path
 
-try:
-    import streamlit as st
-    api_key = st.secrets.get("ANTHROPIC_API_KEY", os.environ.get("ANTHROPIC_API_KEY"))
-except:
+import streamlit as st
+
+if "ANTHROPIC_API_KEY" in st.secrets:
+    api_key = st.secrets["ANTHROPIC_API_KEY"]
+else:
     api_key = os.environ.get("ANTHROPIC_API_KEY")
 
 client = anthropic.Anthropic(api_key=api_key)

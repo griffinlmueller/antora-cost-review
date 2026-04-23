@@ -18,6 +18,15 @@ st.markdown("""
 1. **Clean** — standardizes fields, flags missing data
 2. **Analyze** — identifies the four issue types
 3. **Prioritize** — ranks the top actions for human review
+
+### Instructions
+1. Click **⬇️ Download sample tracker CSV** below to get the sample data
+2. Upload it using the file uploader
+3. Click **▶️ Run Analysis** — takes about 30 seconds
+4. View the prioritized findings on screen
+5. Download the **color-coded Excel** and **Word summary doc**
+
+> 💡 You can also upload your own cost tracker CSV as long as it has these columns: `id`, `part_name`, `category`, `description`, `material_assumption`, `current_cost_usd`, `savings_estimate_usd`, `status`, `owner`, `last_updated`, `supplier`, `lead_time_weeks`, `notes`, `next_action`
 """)
 
 st.divider()
@@ -90,4 +99,58 @@ if "result" in st.session_state:
     )
 
 st.divider()
+st.markdown("## About This Project")
+
+with st.expander("🔧 The Build"):
+    st.markdown("""
+    This tool was built as a working prototype to demonstrate how AI agents can automate the kind of manual review work that typically falls through the cracks on engineering and ops teams.
+
+    **Stack:**
+    - **Python** — core language
+    - **Anthropic API (Claude Sonnet)** — the AI backbone that does the analysis
+    - **Streamlit** — the web UI wrapper that makes it usable without a terminal
+    - **openpyxl** — generates the color-coded Excel output
+    - **python-docx** — generates the Word summary doc
+
+    **Why this stack?**
+    Claude was chosen because it handles semi-structured data and nuanced reasoning well — identifying that two entries are likely duplicates, for example, requires judgment, not just string matching. Streamlit was chosen to make the tool accessible to anyone without requiring installation or technical setup.
+
+    **The sample data** was built to reflect the kinds of subassemblies and cost categories relevant to Antora's thermal battery products — carbon block components, TPV mounting hardware, thermal insulation, electrical modules — with intentional problems seeded in to demonstrate the agent's detection capabilities.
+    """)
+
+with st.expander("⚙️ What the Code Does — Step by Step"):
+    st.markdown("""
+    The agent runs three sequential calls to Claude. Each step's output feeds directly into the next.
+
+    **Step 1 — Clean & Normalize**
+    The raw CSV is passed to Claude with instructions to standardize column names, flag any rows missing critical fields (owner, date, savings estimate), and return structured JSON. This step ensures the downstream analysis is working with clean, consistent data rather than whatever format the tracker happens to be in.
+
+    **Step 2 — Analyze for Issues**
+    The cleaned data is passed to a second Claude call that looks for four specific problem types:
+    - **Stale entries** — any row with no update in 6+ months (relative to today's date)
+    - **Duplicates** — pairs of entries that appear to represent the same part with slightly different names or descriptions
+    - **Conflicting assumptions** — entries referencing the same material at different prices, which undermines savings comparisons
+    - **High-savings items with no owner** — opportunities above a meaningful savings threshold that have no assigned owner or next action
+
+    **Step 3 — Prioritize**
+    The issues found in Step 2 are passed to a third Claude call that acts as a program manager. It produces a ranked list of the top 5 items needing human attention, weighing savings potential against how stalled the entry is. The output is written to be paste-ready into a Slack message or team update.
+
+    **Output generation**
+    The results are used to build two downloadable files: an Excel workbook with rows color-coded by issue type (red = stale, orange = duplicate, yellow = conflicting assumption, purple = high savings/no owner), and a Word doc with the executive summary and full findings that can be uploaded to Google Drive to become a Google Doc.
+    """)
+
+with st.expander("📊 How Opportunities Are Prioritized"):
+    st.markdown("""
+    The prioritization logic is intentionally simple and transparent — it's designed to surface the items where inaction is most costly, not just the ones with the highest headline savings number.
+
+    **The core ranking logic:**
+    - **Savings × staleness** — a $40k opportunity that hasn't moved in 9 months ranks above a $40k opportunity that was updated last week
+    - **No owner = high risk** — unowned items are treated as at-risk regardless of savings size, because without an owner they will not move
+    - **Duplicates inflate the tracker** — duplicate entries overstate total pipeline value and create confusion in supplier negotiations, so they are flagged for consolidation regardless of individual savings size
+    - **Conflicting assumptions undermine credibility** — if two entries use different $/kg for the same material, neither savings figure can be trusted in a negotiation, so these are flagged even if both entries are otherwise healthy
+
+    **What the agent does not do:**
+    The agent does not make decisions — it surfaces information for a human to act on. It does not know which opportunities are strategically important beyond what's in the tracker, it cannot contact suppliers, and it does not update the tracker itself. The goal is to cut the time spent on manual tracker review from hours to minutes, so the human can spend their time on the decisions only they can make.
+    """)
+
 st.caption("Built by Griffin Mueller")
